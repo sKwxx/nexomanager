@@ -9,57 +9,15 @@ const PWD = 'nexo2025';
 const FLAGS={FR:'🇫🇷',US:'🇺🇸',GB:'🇬🇧',DE:'🇩🇪',BE:'🇧🇪',CA:'🇨🇦',AU:'🇦🇺',NL:'🇳🇱',ES:'🇪🇸',IT:'🇮🇹',CH:'🇨🇭',PT:'🇵🇹',SE:'🇸🇪',PL:'🇵🇱',RU:'🇷🇺',JP:'🇯🇵',CN:'🇨🇳',BR:'🇧🇷',MX:'🇲🇽',MA:'🇲🇦',DZ:'🇩🇿',TN:'🇹🇳',IN:'🇮🇳',KR:'🇰🇷',TR:'🇹🇷',SA:'🇸🇦',AE:'🇦🇪',LU:'🇱🇺',AT:'🇦🇹',FI:'🇫🇮',DK:'🇩🇰',NO:'🇳🇴',SG:'🇸🇬',ZA:'🇿🇦'};
 const COORDS={FR:[46.2,2.2],US:[37.1,-95.7],GB:[55.4,-3.4],DE:[51.2,10.5],BE:[50.5,4.5],CA:[56.1,-106.3],AU:[-25.3,133.8],NL:[52.1,5.3],ES:[40.5,-3.7],IT:[41.9,12.6],CH:[46.8,8.2],PT:[39.4,-8.2],SE:[60.1,18.6],PL:[51.9,19.1],RU:[61.5,105.3],JP:[36.2,138.3],CN:[35.9,104.2],BR:[-14.2,-51.9],MX:[23.6,-102.6],MA:[31.8,-7.1],DZ:[28.0,1.7],TN:[33.9,9.5],IN:[20.6,78.9],KR:[35.9,127.8],TR:[38.9,35.2],SA:[23.9,45.1],AE:[23.4,53.8],LU:[49.8,6.1],AT:[47.5,14.6],FI:[61.9,25.7],DK:[56.3,9.5],NO:[60.5,8.5],SG:[1.4,103.8],ZA:[-29.0,25.1]};
 
-// LOGIN
-function doLogin(){
-  try {
-    var input = document.getElementById('pi');
-    var entered = input ? input.value : '';
-    if(entered === PWD){
-      var ls = document.getElementById('LS');
-      var app = document.getElementById('APP');
-      if(ls) ls.style.display='none';
-      if(app) app.style.display='flex';
-      setTimeout(function(){
-        try{
-          if(!gRen) initGlobe();
-          else{
-            var w=document.getElementById('gw');
-            if(w&&gCam&&gRen){
-              gCam.aspect=w.clientWidth/(w.clientHeight||300);
-              gCam.updateProjectionMatrix();
-              gRen.setSize(w.clientWidth,w.clientHeight||300);
-            }
-          }
-        }catch(ex){}
-      },200);
-      loadAll();
-      setInterval(loadAll, 30000);
-    } else {
-      var err = document.getElementById('le');
-      if(err) err.style.display='block';
-      if(input) input.value='';
-      setTimeout(function(){ var e2=document.getElementById('le'); if(e2) e2.style.display='none'; }, 3000);
-    }
-  } catch(ex) {
-    alert('Erreur: ' + ex.message);
-  }
-}
-
-function logout(){
-  var ls=document.getElementById('LS');
-  var app=document.getElementById('APP');
-  var input=document.getElementById('pi');
-  if(ls) ls.style.display='flex';
-  if(app) app.style.display='none';
-  if(input) input.value='';
-}
+// LOGIN REMOVED — accès direct
+function doLogin(){ /* plus utilisé */ }
+function logout(){ /* plus utilisé */ }
 
 document.addEventListener('DOMContentLoaded', function(){
-  // Wire login button
-  var btnLogin = document.getElementById('btn-login');
-  if(btnLogin) btnLogin.addEventListener('click', doLogin);
-  var pi = document.getElementById('pi');
-  if(pi){ pi.focus(); pi.addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); }); }
+  // Démarrage automatique sans login
+  initGlobeDelayed();
+  loadAll();
+  setInterval(loadAll, 30000);
 
 });
 
@@ -498,6 +456,14 @@ function renderGlobeLabels(by){
   requestAnimationFrame(()=>renderGlobeLabels(null));
 }
 
+function initGlobeDelayed(){
+  var tryInit=function(){
+    var w=document.getElementById('gw');
+    if(!w||w.clientWidth<10)return setTimeout(tryInit,100);
+    initGlobe();
+  };
+  setTimeout(tryInit,300);
+}
 window.addEventListener('load',()=>{
   const tryInit=()=>{const w=document.getElementById('gw');if(!w||w.clientWidth<10)return setTimeout(tryInit,100);initGlobe();};
   setTimeout(tryInit,300);
@@ -533,7 +499,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb)}
 .le{font-size:12px;color:var(--re);margin-top:8px;display:none;font-family:var(--fm)}
 
 /* APP */
-#APP{display:none;flex-direction:column;height:100vh}
+#APP{display:flex;flex-direction:column;height:100vh}
 .tb{display:flex;align-items:center;justify-content:space-between;padding:0 22px;height:50px;flex-shrink:0;background:rgba(7,9,15,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--b)}
 .tbl{display:flex;align-items:center;gap:10px}
 .tbn{font-family:var(--fd);font-size:15px;font-weight:800;letter-spacing:-.03em}
@@ -716,20 +682,10 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb)}
 </head>
 <body>
 
-<!-- LOGIN -->
-<div id="LS">
-  <div class="lb">
-    <div style="font-size:32px">🔐</div>
-    <div class="lt">Admin Dashboard</div>
-    <div class="ls">NexoManager — Accès restreint</div>
-    <input class="li" type="password" id="pi" placeholder="Mot de passe admin">
-    <button class="lb-btn" id="btn-login">Accéder</button>
-    <div class="le" id="le">Mot de passe incorrect</div>
-  </div>
-</div>
+<!-- LOGIN REMOVED -->
 
 <!-- APP -->
-<div id="APP">
+<div id="APP" style="display:flex;flex-direction:column;height:100vh">
   <div class="tb">
     <div class="tbl">
       <span style="font-size:16px">🔐</span>
