@@ -55,16 +55,12 @@ function logout(){
 }
 
 document.addEventListener('DOMContentLoaded', function(){
-  var input = document.getElementById('pi');
-  if(input){
-    input.focus();
-    input.addEventListener('keydown', function(e){
-      if(e.key==='Enter') doLogin();
-    });
-  }
-  // Also wire the button directly
-  var btn = document.querySelector('.lb-btn');
-  if(btn) btn.onclick = doLogin;
+  // Wire login button
+  var btnLogin = document.getElementById('btn-login');
+  if(btnLogin) btnLogin.addEventListener('click', doLogin);
+  var pi = document.getElementById('pi');
+  if(pi){ pi.focus(); pi.addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); }); }
+
 });
 
 // FETCH
@@ -727,7 +723,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb)}
     <div class="lt">Admin Dashboard</div>
     <div class="ls">NexoManager — Accès restreint</div>
     <input class="li" type="password" id="pi" placeholder="Mot de passe admin">
-    <button class="lb-btn" onclick="doLogin()">Accéder</button>
+    <button class="lb-btn" id="btn-login">Accéder</button>
     <div class="le" id="le">Mot de passe incorrect</div>
   </div>
 </div>
