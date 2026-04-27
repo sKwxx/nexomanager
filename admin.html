@@ -103,61 +103,113 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb)}
 /* ═══ USER DETAIL PANEL ══════════════════════════════════════════════════ */
 #user-panel{
   position:fixed;inset:0;z-index:500;
-  background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
-  display:none;align-items:center;justify-content:center;
-  padding:20px;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(10px);
+  display:none;align-items:flex-start;justify-content:center;
+  padding:24px;overflow-y:auto;
 }
 #user-panel.open{display:flex}
 .up-box{
-  background:var(--bg2);border:1px solid var(--b2);
-  border-radius:20px;width:100%;max-width:900px;
-  max-height:90vh;display:flex;flex-direction:column;
-  box-shadow:0 40px 100px rgba(0,0,0,.8);
-  overflow:hidden;
+  background:#0C0E18;border:1px solid rgba(255,255,255,.1);
+  border-radius:24px;width:100%;max-width:960px;
+  display:flex;flex-direction:column;
+  box-shadow:0 60px 120px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.04);
+  overflow:hidden;margin:auto;
 }
 .up-header{
   display:flex;align-items:center;justify-content:space-between;
-  padding:18px 22px;border-bottom:1px solid var(--b);flex-shrink:0;
+  padding:24px 28px;border-bottom:1px solid rgba(255,255,255,.06);
+  flex-shrink:0;background:rgba(0,0,0,.3);
 }
-.up-title{font-family:var(--fd);font-size:18px;font-weight:800;letter-spacing:-.02em}
-.up-uid{font-family:var(--fm);font-size:11px;color:var(--t3);margin-top:3px}
-.up-close{background:rgba(255,77,106,.1);border:1px solid rgba(255,77,106,.2);color:var(--re);border-radius:8px;padding:6px 14px;font-size:12px;cursor:pointer;font-family:var(--fm)}
-.up-close:hover{background:rgba(255,77,106,.2)}
-.up-body{flex:1;overflow-y:auto;padding:20px 22px;display:flex;flex-direction:column;gap:16px}
+.up-header-left{display:flex;align-items:center;gap:16px}
+.up-avatar{
+  width:48px;height:48px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(74,158,255,.2),rgba(74,158,255,.05));
+  border:1px solid rgba(74,158,255,.25);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;flex-shrink:0;
+}
+.up-title{font-family:var(--fd);font-size:20px;font-weight:800;letter-spacing:-.03em;color:var(--t)}
+.up-subtitle{font-family:var(--fm);font-size:11px;color:var(--t3);margin-top:4px;display:flex;align-items:center;gap:8px}
+.up-meta-badge{background:rgba(74,158,255,.1);border:1px solid rgba(74,158,255,.2);color:var(--bl);border-radius:6px;padding:2px 8px;font-size:10px}
+.up-close{
+  background:rgba(255,77,106,.08);border:1px solid rgba(255,77,106,.2);
+  color:var(--re);border-radius:10px;padding:8px 18px;
+  font-size:13px;cursor:pointer;font-family:var(--fm);
+  transition:all .2s;
+}
+.up-close:hover{background:rgba(255,77,106,.18);border-color:rgba(255,77,106,.4)}
+.up-body{
+  flex:1;padding:24px 28px;
+  display:flex;flex-direction:column;gap:20px;
+}
 .up-body::-webkit-scrollbar{width:4px}
 .up-body::-webkit-scrollbar-thumb{background:var(--b2);border-radius:2px}
 
-/* Detail sections */
-.up-section{background:var(--bg3);border:1px solid var(--b);border-radius:12px;overflow:hidden}
-.up-section-title{
-  padding:11px 16px;border-bottom:1px solid var(--b);
-  font-family:var(--fm);font-size:10px;color:var(--t2);
-  letter-spacing:.08em;text-transform:uppercase;
-  display:flex;align-items:center;gap:8px;
-  background:rgba(0,0,0,.2);
+/* Sections */
+.up-section{
+  background:rgba(255,255,255,.02);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:16px;overflow:hidden;
 }
-.up-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
-.up-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
-.up-field{padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.03);border-right:1px solid rgba(255,255,255,.03)}
-.up-field:nth-child(2n){border-right:none}
-.up-grid-3 .up-field:nth-child(3n){border-right:none}
-.up-field:last-child,.up-field:nth-last-child(-n+2){border-bottom:none}
-.up-flabel{font-family:var(--fm);font-size:9px;color:var(--t3);letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px}
-.up-fval{font-family:var(--fm);font-size:12px;color:var(--t);word-break:break-all;line-height:1.4}
+.up-section-title{
+  padding:14px 20px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  font-family:var(--fm);font-size:11px;color:var(--t2);
+  letter-spacing:.08em;text-transform:uppercase;
+  display:flex;align-items:center;gap:10px;
+  background:rgba(0,0,0,.25);
+}
+.up-section-title span{font-size:14px}
+
+/* Grid fields */
+.up-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.04)}
+.up-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:rgba(255,255,255,.04)}
+.up-grid-1{display:grid;grid-template-columns:1fr;gap:1px;background:rgba(255,255,255,.04)}
+
+.up-field{
+  padding:14px 20px;
+  background:#0C0E18;
+  transition:background .15s;
+}
+.up-field:hover{background:rgba(74,158,255,.03)}
+
+.up-flabel{
+  font-family:var(--fm);font-size:9px;color:var(--t3);
+  letter-spacing:.09em;text-transform:uppercase;
+  margin-bottom:6px;
+}
+.up-fval{
+  font-family:var(--fm);font-size:13px;color:var(--t);
+  word-break:break-word;line-height:1.5;
+}
 .up-fval.hi{color:var(--bl)}
 .up-fval.gr{color:var(--gr)}
 .up-fval.re{color:var(--re)}
 .up-fval.am{color:var(--am)}
+.up-fval.dim{color:var(--t2);font-size:12px}
 
-/* Full-width field */
-.up-field-full{padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.03);grid-column:1/-1}
-.up-field-full .up-fval{color:var(--t2);font-size:11px;line-height:1.6;word-break:break-word}
+/* Full-width text fields */
+.up-field-wide{
+  padding:14px 20px;background:#0C0E18;
+  border-top:1px solid rgba(255,255,255,.04);
+}
+.up-field-wide .up-fval{
+  color:var(--t2);font-size:12px;line-height:1.7;
+  word-break:break-word;white-space:pre-wrap;
+}
 
 /* Launch history */
-.launch-item{display:flex;align-items:center;gap:12px;padding:8px 16px;border-bottom:1px solid rgba(255,255,255,.02)}
+.launch-item{
+  display:flex;align-items:center;gap:16px;
+  padding:12px 20px;border-bottom:1px solid rgba(255,255,255,.03);
+  background:#0C0E18;transition:background .15s;
+}
+.launch-item:hover{background:rgba(74,158,255,.03)}
 .launch-item:last-child{border-bottom:none}
-.launch-time{font-family:var(--fm);font-size:11px;color:var(--t2);min-width:130px}
+.launch-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.launch-time{font-family:var(--fm);font-size:12px;color:var(--t2);min-width:140px}
 .launch-ver{font-family:var(--fm);font-size:10px}
+.launch-ago{font-family:var(--fm);font-size:11px;color:var(--t3)}
 </style>
 </head>
 <body>
@@ -241,9 +293,12 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb)}
 <div id="user-panel">
   <div class="up-box">
     <div class="up-header">
-      <div>
-        <div class="up-title" id="up-name">Utilisateur</div>
-        <div class="up-uid" id="up-uid">—</div>
+      <div class="up-header-left">
+        <div class="up-avatar">👤</div>
+        <div>
+          <div class="up-title" id="up-name">Utilisateur</div>
+          <div class="up-subtitle" id="up-uid">—</div>
+        </div>
       </div>
       <button class="up-close" onclick="closeUserPanel()">✕ Fermer</button>
     </div>
@@ -401,166 +456,178 @@ function doOS(d){
 // ═══ USER DETAIL PANEL ═══════════════════════════════════════════════════════
 
 function openUserPanel(userId){
-  const userLaunches=allData.filter(r=>r.user_id===userId);
-  if(!userLaunches.length)return;
-  const r=userLaunches[0]; // Latest
+  const userLaunches = allData.filter(r => r.user_id === userId);
+  if(!userLaunches.length) return;
+  const r = userLaunches[0];
 
-  document.getElementById('up-name').textContent=r.username||r.hostname||'Utilisateur inconnu';
-  document.getElementById('up-uid').textContent='ID: '+userId;
+  const flag = FLAGS[r.country_code||''] || '🌐';
+  const now = Date.now();
+  const lastDt = new Date(r.launched_at||0);
+  const diff = Math.floor((now - lastDt)/1000);
+  const when = diff<60?diff+'s':diff<3600?Math.floor(diff/60)+'min':diff<86400?Math.floor(diff/3600)+'h':Math.floor(diff/86400)+'j';
 
-  const flag=FLAGS[r.country_code||'']||'🌐';
-  const now=Date.now();
+  document.getElementById('up-name').textContent = r.username || r.hostname || 'Utilisateur';
+  document.getElementById('up-uid').innerHTML =
+    '<span class="up-meta-badge">ID: '+(userId||'').slice(0,18)+'…</span>' +
+    '<span class="up-meta-badge">'+flag+' '+(r.country||'—')+'</span>' +
+    '<span class="up-meta-badge">'+userLaunches.length+' lancements</span>' +
+    '<span class="up-meta-badge">dernier il y a '+when+'</span>';
 
-  function field(label, val, cls=''){
-    const v=val||'—';
-    return `<div class="up-field"><div class="up-flabel">${label}</div><div class="up-fval ${cls}">${v}</div></div>`;
+  function f(label, val, cls=''){
+    return '<div class="up-field"><div class="up-flabel">'+label+'</div><div class="up-fval '+cls+'">'+(val||'—')+'</div></div>';
   }
-  function fieldFull(label, val){
-    const v=val||'—';
-    return `<div class="up-field-full"><div class="up-flabel">${label}</div><div class="up-fval">${v}</div></div>`;
+  function fw(label, val){
+    return '<div class="up-field-wide"><div class="up-flabel">'+label+'</div><div class="up-fval dim">'+(val||'—')+'</div></div>';
   }
-  function section(icon, title, content){
-    return `<div class="up-section">
-      <div class="up-section-title">${icon} &nbsp;${title}</div>
-      <div class="up-grid">${content}</div>
-    </div>`;
-  }
-  function section3(icon, title, content){
-    return `<div class="up-section">
-      <div class="up-section-title">${icon} &nbsp;${title}</div>
-      <div class="up-grid-3">${content}</div>
-    </div>`;
-  }
-  function sectionFull(icon, title, content){
-    return `<div class="up-section">
-      <div class="up-section-title">${icon} &nbsp;${title}</div>
-      <div>${content}</div>
-    </div>`;
+  function sec(icon, title, gridClass, fields){
+    return '<div class="up-section">' +
+      '<div class="up-section-title"><span>'+icon+'</span>'+title+'</div>' +
+      '<div class="'+gridClass+'">'+fields+'</div>' +
+      '</div>';
   }
 
-  let html='';
+  let html = '';
 
   // Identité
-  html+=section('🪪','Identité',
-    field('Username',r.username,'hi')+
-    field('Hostname',r.hostname,'hi')+
-    field('Propriétaire enregistré',r.registered_owner)+
-    field('Organisation',r.registered_org)+
-    field('Domaine / Workgroup',r.domain_workgroup)+
-    field('Serveur de connexion',r.logon_server)+
-    field('Profil utilisateur',r.user_profile)+
-    field('Machine GUID',r.machine_guid)+
-    fieldFull('Tous les comptes PC',r.all_users)
+  html += sec('🪪','Identité','up-grid',
+    f('Username', r.username, 'hi') +
+    f('Hostname', r.hostname, 'hi') +
+    f('Propriétaire enregistré', r.registered_owner) +
+    f('Organisation', r.registered_org) +
+    f('Machine GUID', r.machine_guid) +
+    f('Domaine / Workgroup', r.domain_workgroup) +
+    f('Serveur connexion', r.logon_server) +
+    f('Profil utilisateur', r.user_profile) +
+    f('Product ID Windows', r.product_id) +
+    f('Windows installé le', r.windows_install) +
+    fw('Tous les comptes PC', r.all_users)
   );
 
   // Localisation
-  html+=section('🌍','Localisation & Réseau',
-    field('IP publique',r.ip,'hi')+
-    field('IP locale',r.ip_local||r.local_ip)+
-    field('Toutes IPs',r.ip_all||r.ip_all)+
-    field('Adresse MAC',r.mac_address)+
-    field('Pays',flag+' '+(r.country||'—'))+
-    field('Ville / Région',(r.city||'—')+' / '+(r.region||'—'))+
-    field('Code postal',r.zip)+
-    field('Coordonnées',(r.lat&&r.lon)?r.lat+', '+r.lon:'—')+
-    field('FAI',r.isp)+
-    field('Organisation réseau',r.org)+
-    field('Numéro AS',r.as_num)+
-    field('Fuseau horaire',r.timezone||r.timezone_geo)+
-    field('Proxy/VPN',r.is_proxy==='True'?'⚠️ OUI':'Non',(r.is_proxy==='True'?'re':''))+
-    field('Mobile',r.is_mobile==='True'?'Oui':'Non')+
-    field('WiFi actuel',r.wifi_ssid,'am')+
-    field('Signal WiFi',r.wifi_signal)
+  html += sec('🌍','Localisation & Réseau','up-grid',
+    f('IP publique', r.ip, 'hi') +
+    f('IP locale', r.ip_local||r.local_ip) +
+    f('Toutes les IPs', r.ip_all) +
+    f('Adresse MAC', r.mac_address) +
+    f('Pays', flag+' '+(r.country||'—')) +
+    f('Ville / Région', (r.city||'—')+' / '+(r.region||'—')) +
+    f('Code postal', r.zip) +
+    f('Coordonnées GPS', (r.lat&&r.lon)?r.lat+', '+r.lon:'—') +
+    f('FAI', r.isp) +
+    f('Organisation réseau', r.org) +
+    f('Numéro AS', r.as_num) +
+    f('Fuseau horaire', r.timezone||r.timezone_name) +
+    f('Proxy / VPN', r.is_proxy==='True'?'⚠️ OUI':'Non', r.is_proxy==='True'?'re':'gr') +
+    f('Mobile', r.is_mobile==='True'?'Oui':'Non') +
+    f('WiFi actuel', r.wifi_ssid, 'am') +
+    f('Signal WiFi', r.wifi_signal)
   );
 
   // Matériel
-  html+=section('⚙️','Matériel',
-    field('OS',r.os,'hi')+
-    field('Modèle PC',r.pc_model)+
-    field('Type',r.pc_type)+
-    field('CPU',r.cpu)+
-    field('Détails CPU',r.cpu_details)+
-    field('GPU',r.gpu)+
-    field('VRAM',r.gpu_ram)+
-    field('RAM',r.ram)+
-    field('Barrettes RAM',r.ram_slots)+
-    field('Écran',r.screen)+
-    field('Moniteurs',r.monitors)+
-    field('Carte mère',r.motherboard)+
-    field('BIOS',r.bios)+
-    field('Batterie',r.battery)+
-    field('Carte son',r.sound_devices)+
-    field('Webcam',r.webcam)
+  html += sec('⚙️','Matériel','up-grid',
+    f('Système d'exploitation', r.os, 'hi') +
+    f('Modèle PC', r.pc_model) +
+    f('Type', r.pc_type) +
+    f('Dernier démarrage', r.last_boot) +
+    f('Uptime', r.uptime) +
+    f('CPU', r.cpu) +
+    f('Détails CPU', r.cpu_details) +
+    f('GPU', r.gpu) +
+    f('VRAM', r.gpu_ram) +
+    f('RAM', r.ram) +
+    f('Barrettes RAM', r.ram_slots) +
+    f('Résolution écran', r.screen) +
+    f('Moniteurs', r.monitors) +
+    f('Carte mère', r.motherboard) +
+    f('BIOS', r.bios) +
+    f('Batterie', r.battery) +
+    f('Carte son', r.sound_devices) +
+    f('Webcam', r.webcam) +
+    f('Imprimantes', r.printers)
   );
 
-  // Disques
-  html+=section('💾','Stockage',
-    fieldFull('Disques logiques',r.disk)+
-    fieldFull('Disques physiques',r.disk_physical)+
-    fieldFull('Disques externes/USB',r.external_drives||r.external_drives)+
-    fieldFull('Utilisation dossier user',r.home_disk_usage)
-  );
+  // Stockage
+  html += '<div class="up-section">' +
+    '<div class="up-section-title"><span>💾</span>Stockage</div>' +
+    '<div class="up-grid-1">' +
+    fw('Disques logiques', r.disk) +
+    fw('Disques physiques (SSD/HDD)', r.disk_physical) +
+    fw('Disques externes / USB', r.external_drives) +
+    fw('Utilisation dossier utilisateur', r.home_disk_usage) +
+    '</div></div>';
 
   // Logiciels
-  html+=section('💻','Logiciels & Sécurité',
-    field('Navigateurs',r.browsers)+
-    field('Navigateur par défaut',r.default_browser)+
-    field('Antivirus',r.antivirus,'gr')+
-    field('Pare-feu',r.firewall)+
-    field('Logiciels installés',r.installed_count)+
-    field('Windows installé le',r.windows_install)+
-    field('Product ID',r.product_id)+
-    field('Python',r.python_version)+
-    field('Langue',r.language)+
-    field('Fuseau système',r.timezone_name)+
-    fieldFull('Programmes au démarrage',r.startup_programs)+
-    fieldFull('Top logiciels installés',r.installed_software)+
-    fieldFull('Tâches planifiées',r.scheduled_tasks)
-  );
+  html += sec('💻','Logiciels & Sécurité','up-grid',
+    f('Navigateurs installés', r.browsers) +
+    f('Navigateur par défaut', r.default_browser) +
+    f('Antivirus', r.antivirus, 'gr') +
+    f('Pare-feu', r.firewall) +
+    f('Logiciels installés', r.installed_count) +
+    f('Langue système', r.language) +
+    f('Python', r.python_version) +
+    f('Fuseau système', r.timezone_name)
+  ) +
+  '<div class="up-section" style="margin-top:-20px;border-top:none;border-radius:0 0 16px 16px">' +
+  '<div class="up-grid-1">' +
+  fw('Programmes au démarrage', r.startup_programs) +
+  fw('Top logiciels installés', r.installed_software) +
+  fw('Tâches planifiées actives', r.scheduled_tasks) +
+  '</div></div>';
 
   // Réseau détaillé
-  html+=section('🌐','Réseau détaillé',
-    fieldFull('Adaptateurs réseau',r.network_adapters)+
-    fieldFull('Réseaux WiFi mémorisés',r.wifi_saved)+
-    fieldFull('Ports ouverts',r.open_ports)+
-    fieldFull('Dossiers partagés',r.shared_folders)+
-    field('Bureau à distance (RDP)',r.rdp_status)+
-    fieldFull('Variables environnement',r.env_vars)
-  );
+  html += '<div class="up-section">' +
+    '<div class="up-section-title"><span>🌐</span>Réseau détaillé</div>' +
+    '<div class="up-grid">' +
+    f('RDP (Bureau à distance)', r.rdp_status) +
+    f('Dossiers partagés', r.shared_folders) +
+    '</div>' +
+    '<div class="up-grid-1">' +
+    fw('Adaptateurs réseau', r.network_adapters) +
+    fw('Réseaux WiFi mémorisés', r.wifi_saved) +
+    fw('Ports ouverts', r.open_ports) +
+    fw('Variables d'environnement', r.env_vars) +
+    '</div></div>';
 
   // Fichiers
-  html+=section('📁','Fichiers',
-    fieldFull('Fichiers récents',r.recent_files)+
-    fieldFull('Bureau',r.desktop_files)+
-    fieldFull('Téléchargements',r.downloads_files)+
-    fieldFull('Documents',r.documents_files)
-  );
+  html += '<div class="up-section">' +
+    '<div class="up-section-title"><span>📁</span>Fichiers</div>' +
+    '<div class="up-grid-1">' +
+    fw('Fichiers récemment ouverts', r.recent_files) +
+    fw('Bureau', r.desktop_files) +
+    fw('Téléchargements', r.downloads_files) +
+    fw('Documents', r.documents_files) +
+    '</div></div>';
 
   // Processus
-  html+=sectionFull('⚡','Processus en cours',
-    `<div class="up-field-full"><div class="up-fval">${r.running_processes||'—'}</div></div>`
-  );
+  html += '<div class="up-section">' +
+    '<div class="up-section-title"><span>⚡</span>Processus en cours</div>' +
+    '<div class="up-grid-1">' +
+    fw('', r.running_processes) +
+    '</div></div>';
 
-  // Historique des lancements
-  const launches=userLaunches.slice(0,20);
-  let launchHtml='';
-  launches.forEach(l=>{
-    const dt=new Date(l.launched_at||0);
-    const diff=Math.floor((now-dt)/1000);
-    const when=diff<60?diff+'s':diff<3600?Math.floor(diff/60)+'min':diff<86400?Math.floor(diff/3600)+'h':Math.floor(diff/86400)+'j';
-    launchHtml+=`<div class="launch-item">
-      <div class="launch-time">${dt.toLocaleDateString('fr-FR')} ${dt.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</div>
-      <span class="pill pb launch-ver">v${l.version||'?'}</span>
-      <span style="font-family:var(--fm);font-size:10px;color:var(--t3)">il y a ${when}</span>
-    </div>`;
+  // Historique
+  const launches = userLaunches.slice(0,20);
+  let lh = '';
+  launches.forEach((l,i) => {
+    const dt = new Date(l.launched_at||0);
+    const d2 = Math.floor((now-dt)/1000);
+    const w2 = d2<60?d2+'s':d2<3600?Math.floor(d2/60)+'min':d2<86400?Math.floor(d2/3600)+'h':Math.floor(d2/86400)+'j';
+    const isFirst = i===0;
+    lh += '<div class="launch-item">' +
+      '<div class="launch-dot" style="background:'+(isFirst?'var(--gr)':'var(--bl)')+'"></div>' +
+      '<div class="launch-time">'+dt.toLocaleDateString('fr-FR')+' '+dt.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})+'</div>' +
+      '<span class="pill pb launch-ver">v'+(l.version||'?')+'</span>' +
+      '<span class="launch-ago">il y a '+w2+'</span>' +
+      '</div>';
   });
-  html+=`<div class="up-section">
-    <div class="up-section-title">📅 &nbsp;Historique des lancements (${userLaunches.length} total)</div>
-    ${launchHtml}
-  </div>`;
+  html += '<div class="up-section">' +
+    '<div class="up-section-title"><span>📅</span>Historique des lancements — '+userLaunches.length+' au total</div>' +
+    lh +
+    '</div>';
 
-  document.getElementById('up-body').innerHTML=html;
+  document.getElementById('up-body').innerHTML = html;
   document.getElementById('user-panel').classList.add('open');
+  document.getElementById('user-panel').scrollTop = 0;
 }
 
 function closeUserPanel(){
