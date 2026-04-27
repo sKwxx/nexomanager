@@ -318,23 +318,61 @@ const COORDS={FR:[46.2,2.2],US:[37.1,-95.7],GB:[55.4,-3.4],DE:[51.2,10.5],BE:[50
 
 // LOGIN
 function doLogin(){
-  if(document.getElementById('pi').value===PWD){
-    document.getElementById('LS').style.display='none';
-    document.getElementById('APP').style.display='flex';
-    setTimeout(()=>{if(!gRen)initGlobe();else{const w=document.getElementById('gw');gCam.aspect=w.clientWidth/(w.clientHeight||300);gCam.updateProjectionMatrix();gRen.setSize(w.clientWidth,w.clientHeight||300);}},100);
-    loadAll(); setInterval(loadAll,30000);
-  } else {
-    const e=document.getElementById('le'); e.style.display='block';
-    document.getElementById('pi').value='';
-    setTimeout(()=>e.style.display='none',3000);
+  try {
+    var input = document.getElementById('pi');
+    var entered = input ? input.value : '';
+    if(entered === PWD){
+      var ls = document.getElementById('LS');
+      var app = document.getElementById('APP');
+      if(ls) ls.style.display='none';
+      if(app) app.style.display='flex';
+      setTimeout(function(){
+        try{
+          if(!gRen) initGlobe();
+          else{
+            var w=document.getElementById('gw');
+            if(w&&gCam&&gRen){
+              gCam.aspect=w.clientWidth/(w.clientHeight||300);
+              gCam.updateProjectionMatrix();
+              gRen.setSize(w.clientWidth,w.clientHeight||300);
+            }
+          }
+        }catch(ex){}
+      },200);
+      loadAll();
+      setInterval(loadAll, 30000);
+    } else {
+      var err = document.getElementById('le');
+      if(err) err.style.display='block';
+      if(input) input.value='';
+      setTimeout(function(){ var e2=document.getElementById('le'); if(e2) e2.style.display='none'; }, 3000);
+    }
+  } catch(ex) {
+    alert('Erreur: ' + ex.message);
   }
 }
+
 function logout(){
-  document.getElementById('LS').style.display='flex';
-  document.getElementById('APP').style.display='none';
+  var ls=document.getElementById('LS');
+  var app=document.getElementById('APP');
+  var input=document.getElementById('pi');
+  if(ls) ls.style.display='flex';
+  if(app) app.style.display='none';
+  if(input) input.value='';
 }
-document.getElementById('pi').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
-window.addEventListener('load',()=>document.getElementById('pi').focus());
+
+window.addEventListener('load', function(){
+  var input = document.getElementById('pi');
+  if(input){
+    input.focus();
+    input.addEventListener('keydown', function(e){
+      if(e.key==='Enter') doLogin();
+    });
+  }
+  // Also wire the button directly
+  var btn = document.querySelector('.lb-btn');
+  if(btn) btn.onclick = doLogin;
+});
 
 // FETCH
 async function sb(ep){
